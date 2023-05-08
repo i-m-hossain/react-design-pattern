@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const UsersList = ({data}) => {
+const UsersList = ({ data }) => {
     return (
         <div>
-            users: {data.length}
+            {data.map((user) => (
+                <h2 key={user.id}>{user.name}</h2>
+            ))}
         </div>
     );
 };
