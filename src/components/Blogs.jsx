@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
 import { apiList } from "../config";
+import withLoadingAndError from "../HOC/withLoadingAndError";
 import useFetchData from "../hooks/fetchData";
+import BlogList from "./BlogList";
 
 const Blogs = () => {
-    const {loading, error, data} = useFetchData(apiList.blogs);
-   
-    if (loading) {
-        return <h2>Loading...</h2>;
-    }
-    if (error) {
-        return <h2>{error?.message}</h2>;
-    }
-    return <div>blogs:{data.length}</div>;
+    const { loading, error, data } = useFetchData(apiList.blogs);
+    const BlogListComponent = withLoadingAndError(BlogList);
+
+    return <BlogListComponent loading={loading} error={error} data={data} />;
 };
 
 export default Blogs;

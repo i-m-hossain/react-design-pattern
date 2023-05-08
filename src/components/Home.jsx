@@ -1,19 +1,13 @@
-import { apiList } from '../config';
-import useFetchData from '../hooks/fetchData';
+import { apiList } from "../config";
+import withLoadingAndError from "../HOC/withLoadingAndError";
+import useFetchData from "../hooks/fetchData";
+import UsersList from "./UsersList";
 
 const Home = () => {
-    const {loading, error, data} = useFetchData(apiList.users)
-    if (loading) {
-        return <h2>Loading...</h2>;
-    }
-    if (error) {
-        return <h2>{error?.message}</h2>;
-    }
-    return (
-        <div>
-            users: {data.length}
-        </div>
-    );
+    const { loading, error, data } = useFetchData(apiList.users);
+    const UserListComponent = withLoadingAndError(UsersList);
+
+    return <UserListComponent loading={loading} error={error} data={data} />;
 };
 
-export default Home;    
+export default Home;
