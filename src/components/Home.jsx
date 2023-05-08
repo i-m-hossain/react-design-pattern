@@ -1,27 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { apiList } from '../config';
+import useFetchData from '../hooks/fetchData';
 
 const Home = () => {
-    const [users, setUsers] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-        fetchAllUsers();
-    }, []);
-    const fetchAllUsers = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(
-                "https://jsonplaceholder.typicode.com/users"
-            );
-            const data = await response.json();
-            setUsers(data);
-            setLoading(false);
-            setError(null);
-        } catch (error) {
-            setLoading(false);
-            setError(error);
-        }
-    };
+    const {loading, error, data} = useFetchData(apiList.users)
     if (loading) {
         return <h2>Loading...</h2>;
     }
@@ -30,7 +11,7 @@ const Home = () => {
     }
     return (
         <div>
-            users: {users.length}
+            users: {data.length}
         </div>
     );
 };

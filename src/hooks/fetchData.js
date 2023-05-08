@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 
-const useFetchData = () => {
+const useFetchData = (api) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-        fetchAllData();
-    }, []);
-    const fetchAllData = async () => {
+        fetchAllData(api);
+    }, [api]);
+    const fetchAllData = async (api) => {
         try {
             setLoading(true);
-            const response = await fetch(
-                "https://jsonplaceholder.typicode.com/users"
-            );
+            const response = await fetch(api);
             const responseObj = await response.json();
             setData(responseObj);
             setLoading(false);
